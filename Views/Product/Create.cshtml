@@ -1,27 +1,57 @@
-﻿@model Product
-
+﻿@using MVCCRUD.ViewModel
+@model ProductViewModel
 @{
-    ViewData["Title"] = "Create Product";
+    ViewData["Title"] = "Create";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1>Create</h1>
 
-@if (!string.IsNullOrEmpty(ViewBag.Message))
-{
-    <p>@ViewBag.Message</p>
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ProducPicture" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="ProducPicture" class="custom-file-input" />
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <span asp-validation-for="ProducPicture" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label">Product Name:</label>
-        <input type="text" asp-for="Name" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Price" class="control-label">Product Price:</label>
-        <input type="text" asp-for="Price" class="form-control" />
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</form>
-

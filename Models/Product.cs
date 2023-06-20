@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCCRUD.Models
@@ -6,14 +7,18 @@ namespace MVCCRUD.Models
     [Table("Product")]
     public class Product
     {
-        [Column("product_id")]
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        [Column("product_name")]
-        [StringLength(50)]
+        [Key]
+        public Guid Id { get; set; }
+        [DisplayName("ProductName")]
+        [StringLength(100)]
+        [Required]
         public string Name { get; set; }
-      
-        [Column("price")]
+        [DisplayName("Price")]
+        [Required]
         public decimal Price { get; set; }
+        [Required]
+        [Display(Name = "Image")]
+        public string ProductPicture { get; set; }
+
     }
 } 
